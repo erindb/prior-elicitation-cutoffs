@@ -21,6 +21,7 @@ var experiment = {
   },
   
   trial: function(qNumber) {
+    showSlide("trial");
   },
   
   questionaire: function() {

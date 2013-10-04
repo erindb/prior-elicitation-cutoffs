@@ -174,3 +174,8 @@ form {
     width:0px;
     background-color:#000000
 }
+
+.error{ color: #F00 }
+
+
+input { text-align: center; }

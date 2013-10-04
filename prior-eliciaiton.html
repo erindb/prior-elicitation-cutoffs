@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Title</title>
+  <title>Catalogue Inventory</title>
   <meta name="viewport" content="initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
 </head> 
@@ -53,15 +53,39 @@
 <div class="slide" id="trial">
   <p> instructions</p>
   <table align="center">
-  <tr><td align="right"> $0-$50 </td><td> <input id="bin0"></input></td></tr>
-  <tr><td align="right"> $50-$100 </td><td> <input id="bin1"></input></td></tr>
-  <tr><td align="right"> $100-$500 </td><td> <input id="bin2"></input></td></tr>
-  <tr><td align="right"> $500-$1,000 </td><td> <input id="bin3"></input></td></tr>
-  <tr><td align="right"> $1,000-$2,000 </td><td> <input id="bin4"></input></td></tr>
-  <tr><td align="right"> $2,000-$5,000 </td><td> <input id="bin5"></input></td></tr>
-  <tr><td align="right"> $5,000-$10,000 </td><td> <input id="bin6"></input></td></tr>
-  <tr><td align="right"> more than $10,000 </td><td> <input id="bin7"></input></td></tr>
+  <tr><td align="right"> $0-$50 </td>
+      <td> <input id="bin0" text-align="center"></input></td>
+      <td id="error0" class="error" width="100px"></td></tr>
+  <tr><td align="right"> $50-$100 </td>
+      <td> <input id="bin1" text-align="center"></input></td>
+      <td id="error1" class="error"></td></tr>
+  <tr><td align="right"> $100-$500 </td>
+      <td> <input id="bin2" text-align="center"></input></td>
+      <td id="error2" class="error"></td></tr>
+  <tr><td align="right"> $500-$1,000 </td>
+      <td> <input id="bin3" text-align="center"></input></td>
+      <td id="error3" class="error"></td></tr>
+  <tr><td align="right"> $1,000-$2,000 </td>
+      <td> <input id="bin4" text-align="center"></input></td>
+      <td id="error4" class="error"></td></tr>
+  <tr><td align="right"> $2,000-$5,000 </td>
+      <td> <input id="bin5" text-align="center"></input></td>
+      <td id="error5" class="error"></td></tr>
+  <tr><td align="right"> $5,000-$10,000 </td>
+      <td> <input id="bin6" text-align="center"></input></td>
+      <td id="error6" class="error"></td></tr>
+  <tr><td align="right"> more than $10,000 </td>
+      <td> <input id="bin7" text-align="center"></input></td>
+      <td id="error7" class="error"></td></tr>
+  <tr><td align="right">total</td>
+      <td id="total" align="center"></td>
+      <td id="errorTotal"></td></tr>
   </table>
+  <button type="button" id="continue">Continue</button>
+  <p id="error" class="error"></p>
+  <p id="tooFew" class="error"></p>
+  <p id="tooMany" class="error"></p>
+</div>;lkj
 
 <div class="slide" id="questionaire">
   <p>Last section! Please enter your responses below, and then click 'Submit'</p>.
@@ -80,11 +104,11 @@
   </form>
   <br/>
   <p>*required</p>
-<div>
+</div>
 
 <div class="slide" id="finished">
   You're finished - thanks for participating! Submitting to Mechanical Turk...
-<div>
+</div>
 
 <!-- Scripts -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
@@ -93,3 +117,4 @@
 <script src="prior-eliciaiton.js"></script>
   
 </body>
+</html>

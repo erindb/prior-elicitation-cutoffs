@@ -59,7 +59,7 @@ var experiment = {
       } else {
         console.log("error 1");
       }
-      table += "<tr " + style + "><td>" + itemNum + "</td><td>" + item + "</td><td>$<input type='text' name='" + item + "-" + bin + "'></input></td>";
+      table += "<tr " + style + "><td>" + itemNum + "</td><td>" + item + "</td><td>$<input " + style + " type='text' name='" + item + "-" + bin + "'></input></td>";
     }
     table += "</table";
     $("#inventory").html(table)
@@ -106,8 +106,6 @@ var experiment = {
         event.preventDefault();
       }
     });
-    //progress bar complete
-    $('.bar').css('width', ( "100%"));
     showSlide("questionaire");
     $("#formsubmit").click(function() {
       var rawResponse = $("#questionaireform").serialize();

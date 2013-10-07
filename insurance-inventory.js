@@ -11,7 +11,7 @@ function rndAlphaNum() {if (bernouli()) {return rndAlpha();} else {return rndInt
 var nQs = 1;
 var cutoffs = [50, 100, 500, 1000, 2000, 5000, 10000];
 var cutoff = sample(cutoffs);
-var items = ["watch", "coffee maker", "laptop", "electric kettle", "headphones", "sweater"];
+var items = ["watch", "coffee maker", "laptop", "electric kettle", "headphones", "sweater", "camera", "backpack", "wallet", "bike"];
 var order = []
 for (var i=0; i<items.length; i++) {
   var item = items[i];

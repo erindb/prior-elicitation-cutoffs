@@ -1,8 +1,8 @@
 import re
 
 f = open("prior-elicitation.results", "r")
-w = open("prior-editied.results", "w")
-to_write = []
+w = open("prior-edited.results", "w")
+to_write = ["subj\tlang\tage\tcomments\tcutoff\titem\tdir\tresponse"]
 header = f.readline()
 colnames = header[:-1].split("\t")
 for line in f:
@@ -29,7 +29,7 @@ for line in f:
 				elif colname == "language":
 					lang = response[2:-2]
 				elif colname == "cutoff":
-					cutoff = response[2:-2]
+					cutoff = response
 		elif colnames[i] == '"workerid"':
 				subj = response
 	for datum in data:

@@ -1,7 +1,7 @@
 import re
 
-f = open("prior-elicitation.results", "r")
-w = open("prior-edited.results", "w")
+f = open("prior.results", "r")
+w = open("prior-insurance-inventory-edited.results", "w")
 to_write = ["subj\tlang\tage\tcomments\tcutoff\titem\tdir\tresponse"]
 header = f.readline()
 colnames = header[:-1].split("\t")

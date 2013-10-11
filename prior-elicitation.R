@@ -224,7 +224,11 @@ for (item in items) {
     }
   }
   new.item.data = unlist(new.item.data)
-  examples[[item]] = new.item.data
+  if (item == "coffee+maker") {
+    examples[["coffee maker"]] = new.item.data
+  } else {
+    examples[[item]] = new.item.data
+  }
   
   #for every round number, sample from a region around it.
   for (i in 1:length(new.item.data)) {
@@ -240,15 +244,50 @@ for (item in items) {
     }
   }
   
-  hist(x=new.item.data, main=item, breaks=100)
+  png(paste(c(item, "-scaled.png"), collapse=""), 1000, 600, pointsize=24)
+  hist(x=new.item.data, main=item, breaks=100, xlab="price")
   par(new=T)
   f <- list()
   f$x <- seq(0,max(new.item.data),length.out=512)
   f$y <- dlogspline(f$x, logspline(new.item.data, lbound=0))#,ubound=1))
   plot(f$x, f$y, type="l", ylab="", xlab="",
-       main="", lwd=2, xlim=c(0,max(unlist(new.item.data))), ylim=c(0,0.005), yaxt='n')
+       main="", lwd=2, xlim=c(0,max(unlist(new.item.data))),
+       ylim=c(0,0.005), yaxt='n')
   par(new=F)
+  dev.off()
 }
+
+item.names <- c("laptop", "sweater", "coffee maker", "watch", "headphones")
+png("sorites-priors.png", 2200, 450, pointsize=32)
+par(mfrow=c(1,5))
+sapply(item.names, function(cat){
+  if (cat == "laptop") {
+    xlab = "price"
+    ylab = "frequency"
+  } else {
+    xlab = ""
+    ylab = ""
+  }
+  hist(x=examples[[cat]], main=cat, breaks=100, xlab=xlab, ylab=ylab)
+  abline(v=sd(examples[[cat]]), col=rainbow(3)[1])
+  abline(v=2*sd(examples[[cat]]), col=rainbow(3)[2])
+  abline(v=3*sd(examples[[cat]]), col=rainbow(3)[3])
+})
+dev.off()
+
+png("sorites-priors-in-stdev.png", 2200, 450, pointsize=32)
+par(mfrow=c(1,5))
+sapply(item.names, function(cat){
+  if (cat == "laptop") {
+    xlab = "price"
+    ylab = "frequency"
+  } else {
+    xlab = ""
+    ylab = ""
+  }
+  hist(x=examples[[cat]]/sd(examples[[cat]]), main=cat, breaks=100, xlab=xlab, ylab=ylab)
+})
+dev.off()
 # 
 # items100 = c()
 # cutoffs100 = c()
@@ -268,3 +307,5 @@ for (item in items) {
 
 return(examples)
 }
+
+getExamples()

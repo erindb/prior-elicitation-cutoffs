@@ -1,8 +1,11 @@
 setwd("~/sorites-analysis/")  ###change this to actual location of repo
+source("analyze-sorites.r")
 
 library(stats)
 library(rjson)
 library(logspline)
+
+#cumulants = prior.bins
 
 getExamples = function() {
   data = read.table("~/CoCoLab/prior-elicitation/prior-edited.results", header=T, sep="\t", row.names=NULL)
@@ -255,6 +258,10 @@ priors = function(src, item) {
     plot(x, y, main=item, #paste(item, " - justine's rough priors"),
          ylab="", xlab="price", type="l", col="purple", yaxt="n", ylim=ylim)
     par(new=T)
+  } else if (src == "cumulants") {
+    plot(cumulants[[item]]$mids, cumulants[[item]]$heights, main=item,
+         ylab="", xlab="", type="l", col="black", yaxt="n", xlim=c(0,10000))
+    par(new=T)
   } else {
     item.names <- c("laptop", "sweater", "coffee maker", "watch", "headphones")
     
@@ -309,49 +316,62 @@ priors = function(src, item) {
 
 ps=28
 
-png("~/CoCoLab/prior-elicitation/how do our human priors, amazon priors, and ebay priors compare?/laptop-comparison.png", 1200, 840, pointsize=ps)
+png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/laptop-comparison.png", 1200, 840, pointsize=ps)
 item = "laptop"
 priors("ebay", item)
 priors("jrp", item)
 priors("ours", item)
 priors("jhp", item)
 priors("amazon", item)
-legend("topright", c("justine's course-grained expt", "erin & justine's interval expt", "justine's original expt", "amazon", "ebay"), fill=c("purple", "blue", "green", "yellow", "red"))
+#priors("cumulants", item)
+legend("topright", c("justine's course-grained expt", "erin & justine's interval expt", "justine's original expt", "amazon", "ebay", "cumulants"), fill=c("purple", "blue", "green", "yellow", "red", "black"))
 dev.off()
 
-png("~/CoCoLab/prior-elicitation/how do our human priors, amazon priors, and ebay priors compare?/watch-comparison.png", 1200, 840, pointsize=ps)
+png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/watch-comparison.png", 1200, 840, pointsize=ps)
 item = "watch"
 priors("ebay", item)
 priors("jrp", item)
 priors("ours", item)
 priors("jhp", item)
 priors("amazon", item)
-legend("topright", c("justine's course-grained expt", "erin & justine's interval expt", "justine's original expt", "amazon", "ebay"), fill=c("purple", "blue", "green", "yellow", "red"))
+#priors("cumulants", item)
+legend("topright", c("justine's course-grained expt", "erin & justine's interval expt", "justine's original expt", "amazon", "ebay", "cumulants"), fill=c("purple", "blue", "green", "yellow", "red", "black"))
 dev.off()
 
-png("~/CoCoLab/prior-elicitation/how do our human priors, amazon priors, and ebay priors compare?/headphones-comparison.png", 1200, 840, pointsize=ps)
+png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/headphones-comparison.png", 1200, 840, pointsize=ps)
 item = "headphones"
 priors("ours", item)
 priors("ebay", item)
 priors("amazon", item)
 priors("jhp", item)
-legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay"), fill=c("blue", "green", "yellow", "red"))
+#priors("cumulants", item)
+legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay", "cumulants"), fill=c("blue", "green", "yellow", "red", "black"))
 dev.off()
 
-png("~/CoCoLab/prior-elicitation/how do our human priors, amazon priors, and ebay priors compare?/coffee-maker-comparison.png", 1200, 840, pointsize=ps)
+png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/coffee-maker-comparison.png", 1200, 840, pointsize=ps)
 item = "coffee maker"
 priors("ours", item)
 priors("amazon", item)
 priors("ebay", item)
 priors("jhp", item)
-legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay"), fill=c("blue", "green", "yellow", "red"))
+#priors("cumulants", item)
+legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay", "cumulants"), fill=c("blue", "green", "yellow", "red", "black"))
 dev.off()
 
-png("~/CoCoLab/prior-elicitation/how do our human priors, amazon priors, and ebay priors compare?/sweater-comparison.png", 1200, 840, pointsize=ps)
+png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/sweater-comparison.png", 1200, 840, pointsize=ps)
 item = "sweater"
 priors("ours", item)
 priors("jhp", item)
 priors("amazon", item)
 priors("ebay", item)
-legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay"), fill=c("blue", "green", "yellow", "red"))
+#priors("cumulants", item)
+legend("topright", c("erin & justine's interval expt", "justine's original expt", "amazon", "ebay", "cumulants"), fill=c("blue", "green", "yellow", "red", "black"))
 dev.off()
+
+# png("~/CoCoLab/prior-elicitation/how do all our priors compare to each other? THEY'RE DIFFERENT/watch-ebay-vs-amazon-comparison.png", 1200, 840, pointsize=ps)
+# item = "watch"
+# priors("ebay", item)
+# priors("amazon", item)
+# priors("cumulants", item)
+# legend("topright", c("amazon", "ebay"), fill=c("yellow", "red"))
+# dev.off()

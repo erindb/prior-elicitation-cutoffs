@@ -5,6 +5,8 @@ import urllib2
 from bs4 import BeautifulSoup
 import re
 import random
+
+price_regex = r"g-b (amt )?bidsold(.*\r?\n?)(.*\r?\n)?(.*\r?\n)?.*\$([0-9,.]+)<"
  
 def my_fetch(url_to_access):
 	wt = random.uniform(15, 60)
@@ -16,24 +18,40 @@ def my_fetch(url_to_access):
 	html = f.read()
 	return html
 
-for item in ["coffee+maker", "electric+kettle", "laptop", "headphones", "sweater", "bike", "backpack", "purse"]: #watch
-	url = "http://www.ebay.com/sch/i.html?_sacat=0&_from=R40&_nkw="+item+"&LH_Complete=1&LH_Sold=1&_ipg=200&rt=nc"
+for item in ["laptop"]:#["sweater", "wrist+watch", "laptop", "coffee+maker", "headphones", "sweater", "bike", "backpack", "purse", "electric+kettle"]: #"wrist+watch", "laptop", "coffee+maker", "headphones", 
+	if item == "laptop":
+		url = "http://www.ebay.com/sch/Laptops-Netbooks-/175672/i.html?_sop=13&LH_Sold=1&_from=R40&LH_Complete=1&_nkw=laptop&_ipg=200"
+	elif item == "watch":
+		url = "http://www.ebay.com/sch/i.html?_sacat=0&_from=R40&LH_Complete=1&LH_Sold=1&_nkw=wrist+watch&LH_BIN=1&_ipg=200"
+	elif item == "headphones":
+		url = "http://www.ebay.com/sch/Headphones-/112529/i.html?LH_BIN=1&LH_Complete=1&LH_Sold=1&rt=nc&_ipg=200"
+		#url = "http://www.ebay.com/sch/i.html?LH_BIN=1&LH_Sold=1&_from=R40&LH_Complete=1&_sacat=0&_nkw=headphones&_dcat=112529&Fit%2520Design=Neckband&rt=nc"
+	else :
+		url = "http://www.ebay.com/sch/i.html?_sacat=0&_from=R40&_nkw="+item+"&LH_Complete=1&LH_Sold=1&_ipg=200&rt=nc"
 	#soup = BeautifulSoup(my_fetch(url))
 	string = my_fetch(url)
+	print string
 	prices = []
-	for find in re.findall(r"g-b bidsold(.*\r?\n)(.*\r?\n)?.*\$([0-9,.]+)<", string):#"<div class=\"g-b bidsold\" itemprop=\"price\"> *\n? *\$([0-9,]*)</div>", string):
+	for find in re.findall(price_regex, string):#"<div class=\"g-b bidsold\" itemprop=\"price\"> *\n? *\$([0-9,]*)</div>", string):
 		prices.append(re.sub(r",", "", find[-1]))
-	nresults = int(re.sub(r",", "", re.findall(r"rcnt\">(.*)</span>", string)[-1]))
+	#nresults = int(re.sub(r",", "", re.findall(r"rcnt\">(.*)</span>", string)[-1]))
 	per_page = 200
-	npages = nresults / per_page
+	#npages = nresults / per_page
 	print item + ":",
 	print prices
 	for n in range(2,57):#range(2,npages):
-		tags = ["&_from=R40", "&LH_Complete=1", "&LH_Sold=1", "&_nkw=watch", "&_pgn=" + str(n), "&_ipg=200", "&_skc=200"]
-		random.shuffle(tags)
-		page_url = "http://www.ebay.com/sch/i.html?_sacat=0" + "".join(tags) + "&rt=nc"
+		if item == "laptop":
+			page_url = "http://www.ebay.com/sch/Laptops-Netbooks-/175672/i.html?_sop=13&LH_Sold=1&_pgn=" + str(n)+ "&_from=R40&LH_Complete=1&_nkw=laptop"
+		elif item == "watch":
+			page_url = "http://www.ebay.com/sch/i.html?_sacat=0&_from=R40&LH_Complete=1&LH_Sold=1&_nkw=wrist+watch&LH_BIN=1&_pgn=" + str(n)
+		elif item == "headphones":
+			page_url = "http://www.ebay.com/sch/Headphones-/112529/i.html?LH_BIN=1&LH_Complete=1&LH_Sold=1&rt=nc&_ipg=200&_pgn=" + str(n)
+		else:
+			tags = ["&_from=R40", "&LH_Complete=1", "&LH_Sold=1", "&_nkw=" + item, "&_pgn=" + str(n), "&_ipg=200", "&_skc=200"]
+			random.shuffle(tags)
+			page_url = "http://www.ebay.com/sch/i.html?_sacat=0" + "".join(tags) + "&rt=nc"
 		page_string = my_fetch(page_url)
-		for find in re.findall(r"g-b bidsold(.*\r?\n)(.*\r?\n)?.*\$([0-9,.]+)<", page_string):#"<div class=\"g-b bidsold\" itemprop=\"price\"> *\n? *\$([0-9,]*)</div>", string):
+		for find in re.findall(price_regex, page_string):#"<div class=\"g-b bidsold\" itemprop=\"price\"> *\n? *\$([0-9,]*)</div>", string):
 			prices.append(re.sub(r",", "", find[-1]))
 		print "n:",
 		print n
